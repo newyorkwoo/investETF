@@ -17,8 +17,8 @@ yarn-error.log*
 package-lock.json
 
 # Expo
-expo-app/
 expo-app/.expo/
+expo-app/dist/
 
 # React build
 react-app/dist/
