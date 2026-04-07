@@ -1,0 +1,397 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 63;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0325C59210F8A002581C3E84 /* ETFCalcApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618A4D9EC66352459D9EEFD1 /* ETFCalcApp.swift */; };
+		0AAD89C22DACD7A411524B0E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD79FD586646BAE929972AE /* ContentView.swift */; };
+		1692DA2FBEBA6818CD5F3B5F /* ETFSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD19911BDF44B510EA195B47 /* ETFSelectorView.swift */; };
+		2B0ED821B980F5DE9A672058 /* QQQM.json in Resources */ = {isa = PBXBuildFile; fileRef = 1665E2D0A64C7A75B0DCC391 /* QQQM.json */; };
+		40203FC28B055CE02B7B0E84 /* ResultsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6D7A2FFF3307E55477CDAF /* ResultsTableView.swift */; };
+		428CA32EF9216D712A534AF3 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96955D115994D5B3D51731F /* DataService.swift */; };
+		495B8938FE871247CE0B4C6D /* meta.json in Resources */ = {isa = PBXBuildFile; fileRef = FCF1BE09796E574628F8520F /* meta.json */; };
+		54A05CDED08192E72690940B /* splits.json in Resources */ = {isa = PBXBuildFile; fileRef = A1BD5901606F1380AF41F9BB /* splits.json */; };
+		579BFAECE8E1075234D7D378 /* QQQ.json in Resources */ = {isa = PBXBuildFile; fileRef = F6B069C70019F313769272EF /* QQQ.json */; };
+		5A9905070A11D8A154B4F543 /* 0050.json in Resources */ = {isa = PBXBuildFile; fileRef = E910185AF3FD26AF485362AA /* 0050.json */; };
+		80E929D24E2F5DC75334C052 /* ChartPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118EA1EC23797B4D10ACE718 /* ChartPanelView.swift */; };
+		815FD2BBE4F41C2E93F1634C /* BacktestEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7FBE31EC6F810D662F934C /* BacktestEngine.swift */; };
+		85B95E2675F530240D41D187 /* MetricCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF12EB9F21A35EFF02755831 /* MetricCardsView.swift */; };
+		89CAF66024C343F5B489824D /* 00631L.json in Resources */ = {isa = PBXBuildFile; fileRef = 725D0B7DD04505CB5A8152E6 /* 00631L.json */; };
+		C43D3D2EEDEC910B7949BCAB /* ETFMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72611A89134DEAFFE56293F0 /* ETFMeta.swift */; };
+		F45A26FF1990DB933AC91CE9 /* BacktestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F360DA73C1E04F27668DC7B /* BacktestModels.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		118EA1EC23797B4D10ACE718 /* ChartPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPanelView.swift; sourceTree = "<group>"; };
+		1665E2D0A64C7A75B0DCC391 /* QQQM.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QQQM.json; sourceTree = "<group>"; };
+		3F360DA73C1E04F27668DC7B /* BacktestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestModels.swift; sourceTree = "<group>"; };
+		4A7FBE31EC6F810D662F934C /* BacktestEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestEngine.swift; sourceTree = "<group>"; };
+		5DD79FD586646BAE929972AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		618A4D9EC66352459D9EEFD1 /* ETFCalcApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETFCalcApp.swift; sourceTree = "<group>"; };
+		6F4C7B32190A6DBAEF8DA5BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		725D0B7DD04505CB5A8152E6 /* 00631L.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = 00631L.json; sourceTree = "<group>"; };
+		72611A89134DEAFFE56293F0 /* ETFMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETFMeta.swift; sourceTree = "<group>"; };
+		A1BD5901606F1380AF41F9BB /* splits.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = splits.json; sourceTree = "<group>"; };
+		C96955D115994D5B3D51731F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		CD19911BDF44B510EA195B47 /* ETFSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETFSelectorView.swift; sourceTree = "<group>"; };
+		E445FF73EEE0DCE0693C61DE /* ETFCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETFCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E910185AF3FD26AF485362AA /* 0050.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = 0050.json; sourceTree = "<group>"; };
+		EF6D7A2FFF3307E55477CDAF /* ResultsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableView.swift; sourceTree = "<group>"; };
+		F6B069C70019F313769272EF /* QQQ.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = QQQ.json; sourceTree = "<group>"; };
+		FCF1BE09796E574628F8520F /* meta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = meta.json; sourceTree = "<group>"; };
+		FF12EB9F21A35EFF02755831 /* MetricCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricCardsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4CAB02478A8561E860C5A67A = {
+			isa = PBXGroup;
+			children = (
+				DF0588C1DF9A9F420487FBD3 /* ETFCalc */,
+				6C183EEEAECD08EA6C05D9DE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6449B5EAAAF3B513DC130CD1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3F360DA73C1E04F27668DC7B /* BacktestModels.swift */,
+				72611A89134DEAFFE56293F0 /* ETFMeta.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		6C183EEEAECD08EA6C05D9DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E445FF73EEE0DCE0693C61DE /* ETFCalc.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7BCCB27ADFCFF46770E4F57F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				118EA1EC23797B4D10ACE718 /* ChartPanelView.swift */,
+				5DD79FD586646BAE929972AE /* ContentView.swift */,
+				CD19911BDF44B510EA195B47 /* ETFSelectorView.swift */,
+				FF12EB9F21A35EFF02755831 /* MetricCardsView.swift */,
+				EF6D7A2FFF3307E55477CDAF /* ResultsTableView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D2BE627662D25C9720318556 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E910185AF3FD26AF485362AA /* 0050.json */,
+				725D0B7DD04505CB5A8152E6 /* 00631L.json */,
+				FCF1BE09796E574628F8520F /* meta.json */,
+				F6B069C70019F313769272EF /* QQQ.json */,
+				1665E2D0A64C7A75B0DCC391 /* QQQM.json */,
+				A1BD5901606F1380AF41F9BB /* splits.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DF0588C1DF9A9F420487FBD3 /* ETFCalc */ = {
+			isa = PBXGroup;
+			children = (
+				618A4D9EC66352459D9EEFD1 /* ETFCalcApp.swift */,
+				6F4C7B32190A6DBAEF8DA5BF /* Info.plist */,
+				6449B5EAAAF3B513DC130CD1 /* Models */,
+				D2BE627662D25C9720318556 /* Resources */,
+				F7DF158A439822F86153262A /* Services */,
+				7BCCB27ADFCFF46770E4F57F /* Views */,
+			);
+			path = ETFCalc;
+			sourceTree = "<group>";
+		};
+		F7DF158A439822F86153262A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4A7FBE31EC6F810D662F934C /* BacktestEngine.swift */,
+				C96955D115994D5B3D51731F /* DataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8C46CE1C4BEF7DBF4621420E /* ETFCalc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 377E3A24BAA6580A73373F4E /* Build configuration list for PBXNativeTarget "ETFCalc" */;
+			buildPhases = (
+				4759AAF25DE306F6DD0DBEE9 /* Sources */,
+				479B677DA289AC1A1F0D2B01 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ETFCalc;
+			packageProductDependencies = (
+			);
+			productName = ETFCalc;
+			productReference = E445FF73EEE0DCE0693C61DE /* ETFCalc.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BBC379592152B37834DC374C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					8C46CE1C4BEF7DBF4621420E = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0FA80E52B8FCB92A85697650 /* Build configuration list for PBXProject "ETFCalc" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4CAB02478A8561E860C5A67A;
+			minimizedProjectReferenceProxies = 1;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8C46CE1C4BEF7DBF4621420E /* ETFCalc */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		479B677DA289AC1A1F0D2B01 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5A9905070A11D8A154B4F543 /* 0050.json in Resources */,
+				89CAF66024C343F5B489824D /* 00631L.json in Resources */,
+				579BFAECE8E1075234D7D378 /* QQQ.json in Resources */,
+				2B0ED821B980F5DE9A672058 /* QQQM.json in Resources */,
+				495B8938FE871247CE0B4C6D /* meta.json in Resources */,
+				54A05CDED08192E72690940B /* splits.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4759AAF25DE306F6DD0DBEE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				815FD2BBE4F41C2E93F1634C /* BacktestEngine.swift in Sources */,
+				F45A26FF1990DB933AC91CE9 /* BacktestModels.swift in Sources */,
+				80E929D24E2F5DC75334C052 /* ChartPanelView.swift in Sources */,
+				0AAD89C22DACD7A411524B0E /* ContentView.swift in Sources */,
+				428CA32EF9216D712A534AF3 /* DataService.swift in Sources */,
+				0325C59210F8A002581C3E84 /* ETFCalcApp.swift in Sources */,
+				C43D3D2EEDEC910B7949BCAB /* ETFMeta.swift in Sources */,
+				1692DA2FBEBA6818CD5F3B5F /* ETFSelectorView.swift in Sources */,
+				85B95E2675F530240D41D187 /* MetricCardsView.swift in Sources */,
+				40203FC28B055CE02B7B0E84 /* ResultsTableView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1A604CC4136F6910152CD9D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		2A2542B81BCCEAFA7EDA0E4F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATICALLY_MANAGE_SIGNING = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9K7YW349U4;
+				INFOPLIST_FILE = ETFCalc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.steven.ETFCalc;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		37ED0C05D1A3FABD05E87E3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATICALLY_MANAGE_SIGNING = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9K7YW349U4;
+				INFOPLIST_FILE = ETFCalc/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.steven.ETFCalc;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8571D4BE42A27755EA2ACA6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0FA80E52B8FCB92A85697650 /* Build configuration list for PBXProject "ETFCalc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8571D4BE42A27755EA2ACA6A /* Debug */,
+				1A604CC4136F6910152CD9D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		377E3A24BAA6580A73373F4E /* Build configuration list for PBXNativeTarget "ETFCalc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A2542B81BCCEAFA7EDA0E4F /* Debug */,
+				37ED0C05D1A3FABD05E87E3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BBC379592152B37834DC374C /* Project object */;
+}
