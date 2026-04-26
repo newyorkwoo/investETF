@@ -25,7 +25,7 @@ COLORS = {
     "00631L": "#34D399",
 }
 
-PRESETS = [("3K", 3000), ("5K", 5000), ("1W", 10000), ("2W", 20000), ("3W", 30000)]
+PRESETS = [("3千", 3000), ("5千", 5000), ("1萬", 10000), ("2萬", 20000), ("3萬", 30000)]
 
 # ═══════════════════════════════════════════════════════
 st.set_page_config(page_title="ETF 定期定額試算", page_icon="📈", layout="wide")
@@ -132,8 +132,8 @@ if not selected_data:
 
 st.divider()
 
-# ── 月份清單（取所有已選ETF各自最早月份到最新）────────────
-overall_min_date = min(df.index.min() for df in selected_data.values())
+# ── 月份清單（取所有已選ETF各自的最晚「起始」月份到最新）────────────
+overall_min_date = max(df.index.min() for df in selected_data.values())
 overall_max_date = max(df.index.max() for df in selected_data.values())
 
 def _month_range(start: pd.Timestamp, end: pd.Timestamp) -> list[str]:
@@ -265,6 +265,13 @@ if run_clicked:
     if not results:
         st.stop()
 
+    # 依總報酬率由高到低排序
+    sorted_result_syms = sorted(
+        [s for s in ETF_DISPLAY_ORDER if s in results],
+        key=lambda s: results[s].total_return_pct,
+        reverse=True
+    )
+
     # ── 比較指標表 ────────────────────────────────────────
     # ── 計算方法說明 ──────────────────────────────────────
     st.info(
@@ -276,7 +283,7 @@ if run_clicked:
 
     st.subheader("比較指標")
     rows = []
-    for sym in ETF_DISPLAY_ORDER:
+    for sym in sorted_result_syms:
         if sym not in results:
             continue
         r = results[sym]
@@ -297,7 +304,7 @@ if run_clicked:
 
     # ── Metric cards ──────────────────────────────────────
     metric_cols = st.columns(len(results))
-    for col, sym in zip(metric_cols, [s for s in ETF_DISPLAY_ORDER if s in results]):
+    for col, sym in zip(metric_cols, sorted_result_syms):
         r = results[sym]
         with col:
             color = COLORS[sym]
@@ -318,7 +325,7 @@ if run_clicked:
     # ── 投資組合市值折線圖 ─────────────────────────────────
     st.subheader("投資組合市值比較")
     fig_value = go.Figure()
-    for sym in ETF_DISPLAY_ORDER:
+    for sym in sorted_result_syms:
         if sym not in results:
             continue
         curve = results[sym].equity_curve
@@ -347,7 +354,7 @@ if run_clicked:
     # ── 投報率成長（標準化）───────────────────────────────
     st.subheader("投報率成長比較")
     fig_pct = go.Figure()
-    for sym in ETF_DISPLAY_ORDER:
+    for sym in sorted_result_syms:
         if sym not in results:
             continue
         curve = results[sym].equity_curve
@@ -370,7 +377,7 @@ if run_clicked:
     # ── 回撤曲線 ──────────────────────────────────────────
     st.subheader("回撤比較")
     fig_dd = go.Figure()
-    for sym in ETF_DISPLAY_ORDER:
+    for sym in sorted_result_syms:
         if sym not in results:
             continue
         curve = results[sym].equity_curve
@@ -392,8 +399,8 @@ if run_clicked:
 
     # ── 明細資料 ──────────────────────────────────────────
     with st.expander("查看各 ETF 明細資料（最近 120 筆）"):
-        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in ETF_DISPLAY_ORDER if s in results])
-        for tab, sym in zip(tabs, [s for s in ETF_DISPLAY_ORDER if s in results]):
+        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in sorted_result_syms])
+        for tab, sym in zip(tabs, sorted_result_syms):
             with tab:
                 st.dataframe(results[sym].equity_curve.tail(120), use_container_width=True)
 

@@ -49,6 +49,7 @@ struct ContentView: View {
     @State private var results: [String: BacktestResult] = [:]
     @State private var errors: [String: String] = [:]
     @State private var isCalculating = false
+    @FocusState private var isAmountFocused: Bool
 
     private var monthOptions: [String] {
         buildMonthOptions(appData.etfs, selected: selected)
@@ -72,10 +73,20 @@ struct ContentView: View {
                             .keyboardType(.numberPad)
                             .multilineTextAlignment(.center)
                             .font(.title3.bold())
+                            .focused($isAmountFocused)
                             .onChange(of: inputAmt) { v in
                                 if let n = Int(v), n >= 0 { monthlyAmt = n }
                             }
                             .onSubmit { inputAmt = "\(monthlyAmt)" }
+                            .toolbar {
+                                ToolbarItemGroup(placement: .keyboard) {
+                                    Spacer()
+                                    Button("完成") {
+                                        isAmountFocused = false
+                                        inputAmt = "\(monthlyAmt)"
+                                    }
+                                }
+                            }
                         StepButton(label: "＋") { adjustAmt(1000) }
                     }
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -84,6 +95,7 @@ struct ContentView: View {
                                 Button(label) {
                                     monthlyAmt = val
                                     inputAmt = "\(val)"
+                                    isAmountFocused = false
                                 }
                                 .font(.caption.bold())
                                 .padding(.horizontal, 10)
