@@ -1,0 +1,10 @@
+.venv
+__pycache__
+.git
+.vscode
+.DS_Store
+react-app
+expo-app
+ios-app
+data/*.csv
+data/meta.json
