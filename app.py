@@ -399,8 +399,10 @@ if run_clicked:
 
     # ── 明細資料 ──────────────────────────────────────────
     with st.expander("查看各 ETF 明細資料（最近 120 筆）"):
-        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in sorted_result_syms])
-        for tab, sym in zip(tabs, sorted_result_syms):
+        # 為避免 Streamlit 前端渲染錯誤 (removeChild)，分頁標籤維持固定順序
+        stable_syms = [s for s in ETF_DISPLAY_ORDER if s in results]
+        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in stable_syms])
+        for tab, sym in zip(tabs, stable_syms):
             with tab:
                 st.dataframe(results[sym].equity_curve.tail(120), use_container_width=True)
 
