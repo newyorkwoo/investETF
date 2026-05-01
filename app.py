@@ -60,6 +60,16 @@ st.markdown("""
 div[data-testid="stHorizontalBlock"] button[kind="secondary"] {
     padding: 2px 10px; font-size: 0.8rem;
 }
+
+/* ETF 按鈕配色：精確鎖定只含 4 欄的橫列（ETF 選擇區），不影響其他按鈕 */
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(1) button { border-color: #F59E0B; color: #F59E0B; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(1) [data-testid="stBaseButton-primary"] { background-color: #F59E0B; border-color: #F59E0B; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(2) button { border-color: #34D399; color: #34D399; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(2) [data-testid="stBaseButton-primary"] { background-color: #34D399; border-color: #34D399; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(3) button { border-color: #4C9BE8; color: #4C9BE8; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(3) [data-testid="stBaseButton-primary"] { background-color: #4C9BE8; border-color: #4C9BE8; color: #fff; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(4) button { border-color: #A78BFA; color: #A78BFA; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(4) [data-testid="stBaseButton-primary"] { background-color: #A78BFA; border-color: #A78BFA; color: #fff; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -110,10 +120,17 @@ btn_cols = st.columns(len(ETF_DISPLAY_ORDER))
 for col, sym in zip(btn_cols, ETF_DISPLAY_ORDER):
     with col:
         is_sel = sym in st.session_state.selected_etfs
-        label_in = f"{'✓ ' if is_sel else ''}{sym}"
-        since_str = etf_since.get(sym, "")
-        name = ETF_META[sym]["name"]
-        btn_label = f"{label_in}\n{name}\nsince {since_str}"
+        check = "✓ " if is_sel else ""
+        if sym == "0050":
+            btn_label = f"{check}0050 元大台灣50\n自2003-6"
+        elif sym == "QQQ":
+            btn_label = f"{check}QQQ\n自1999-03"
+        elif sym == "QQQM":
+            btn_label = f"{check}QQQM\n自2020-10"
+        else:
+            name = ETF_META[sym]["name"]
+            since_str = etf_since.get(sym, "")
+            btn_label = f"{check}{sym}\n{name}\nsince {since_str}"
         if st.button(btn_label, key=f"etf_btn_{sym}", use_container_width=True,
                      type="primary" if is_sel else "secondary"):
             if is_sel:
@@ -236,20 +253,19 @@ with bc2:
 
 st.divider()
 
-# ── 回測計算 ──────────────────────────────────────────────
+# ── 回測計算：執行並存入 session_state ───────────────────
 if run_clicked:
-    results: dict[str, object] = {}
-    errors:  dict[str, str]   = {}
-    eff_dates: dict[str, tuple[str, str]] = {}  # per-ETF effective date range
+    _results: dict[str, object] = {}
+    _errors:  dict[str, str]   = {}
+    _eff_dates: dict[str, tuple[str, str]] = {}
     for sym, df in selected_data.items():
         try:
-            # clamp 到每檔 ETF 自身可用的資料區間
             etf_min = df.index.min().strftime("%Y-%m-%d")
             etf_max = df.index.max().strftime("%Y-%m-%d")
             eff_start = max(start_str, etf_min)
             eff_end   = min(end_str,   etf_max)
-            eff_dates[sym] = (eff_start, eff_end)
-            results[sym] = run_dca_backtest(
+            _eff_dates[sym] = (eff_start, eff_end)
+            _results[sym] = run_dca_backtest(
                 price_df=df,
                 start_date=eff_start,
                 end_date=eff_end,
@@ -257,22 +273,32 @@ if run_clicked:
                 monthly_amount=float(st.session_state.monthly_input),
             )
         except Exception as exc:  # noqa: BLE001
-            errors[sym] = str(exc)
+            _errors[sym] = str(exc)
 
-    for sym, msg in errors.items():
+    for sym, msg in _errors.items():
         st.error(f"{sym} 試算失敗：{msg}")
 
-    if not results:
-        st.stop()
+    if _results:
+        st.session_state.backtest = {
+            "results": _results,
+            "eff_dates": _eff_dates,
+            "sorted_syms": sorted(
+                [s for s in ETF_DISPLAY_ORDER if s in _results],
+                key=lambda s: _results[s].total_return_pct,
+                reverse=True,
+            ),
+            "splits": {s: all_splits.get(s, pd.DataFrame(columns=["Date", "SplitRatio"]))
+                       for s in selected_syms},
+        }
 
-    # 依總報酬率由高到低排序
-    sorted_result_syms = sorted(
-        [s for s in ETF_DISPLAY_ORDER if s in results],
-        key=lambda s: results[s].total_return_pct,
-        reverse=True
-    )
+# ── 結果展示：從 session_state 取得，元件樹結構保持穩定 ──
+if "backtest" in st.session_state:
+    bt             = st.session_state.backtest
+    results        = bt["results"]
+    eff_dates      = bt["eff_dates"]
+    sorted_result_syms = bt["sorted_syms"]
+    splits_in_range    = bt["splits"]
 
-    # ── 比較指標表 ────────────────────────────────────────
     # ── 計算方法說明 ──────────────────────────────────────
     st.info(
         "**計算方法**：採用除權息調整後收盤價（Adj Close）。"
@@ -281,18 +307,14 @@ if run_clicked:
         "圖表中虛線標示分割 / 反向分割事件。"
     )
 
+    # ── 比較指標表 ────────────────────────────────────────
     st.subheader("比較指標")
     rows = []
     for sym in sorted_result_syms:
-        if sym not in results:
-            continue
         r = results[sym]
-        df = selected_data[sym]
-        eff_start = max(start_str, df.index.min().strftime("%Y-%m-%d"))[:7]
-        eff_end   = min(end_str,   df.index.max().strftime("%Y-%m-%d"))[:7]
         rows.append({
             "ETF": f"{sym}　{ETF_META[sym]['name']}",
-            "實際區間": f"{eff_start} ～ {eff_end}",
+            "實際區間": f"{eff_dates[sym][0][:7]} ～ {eff_dates[sym][1][:7]}",
             "總投入": f"{r.total_invested:,.0f}",
             "期末市值": f"{r.final_value:,.0f}",
             "總報酬率": f"{r.total_return_pct:.2f}%",
@@ -302,11 +324,13 @@ if run_clicked:
         })
     st.dataframe(pd.DataFrame(rows).set_index("ETF"), use_container_width=True)
 
-    # ── Metric cards ──────────────────────────────────────
-    metric_cols = st.columns(len(results))
-    for col, sym in zip(metric_cols, sorted_result_syms):
-        r = results[sym]
-        with col:
+    # ── Metric cards：固定 4 欄，避免欄數變動引發 removeChild ─
+    metric_cols = st.columns(4)
+    for i, sym in enumerate(ETF_DISPLAY_ORDER):
+        if sym not in results:
+            continue
+        with metric_cols[i]:
+            r = results[sym]
             color = COLORS[sym]
             st.markdown(
                 f"<div style='border-left:4px solid {color};padding-left:8px'>"
@@ -326,8 +350,6 @@ if run_clicked:
     st.subheader("投資組合市值比較")
     fig_value = go.Figure()
     for sym in sorted_result_syms:
-        if sym not in results:
-            continue
         curve = results[sym].equity_curve
         fig_value.add_trace(go.Scatter(
             x=curve.index, y=curve["PortfolioValue"],
@@ -340,8 +362,6 @@ if run_clicked:
         mode="lines", name="累計投入",
         line=dict(width=1.5, dash="dot", color="#888"),
     ))
-    splits_in_range = {s: all_splits.get(s, pd.DataFrame(columns=["Date","SplitRatio"]))
-                       for s in selected_syms}
     _add_split_markers(fig_value, splits_in_range, eff_dates)
     fig_value.update_layout(
         xaxis_title="日期", yaxis_title="金額（TWD）",
@@ -355,8 +375,6 @@ if run_clicked:
     st.subheader("投報率成長比較")
     fig_pct = go.Figure()
     for sym in sorted_result_syms:
-        if sym not in results:
-            continue
         curve = results[sym].equity_curve
         ratio = curve["PortfolioValue"] / curve["Invested"] * 100
         fig_pct.add_trace(go.Scatter(
@@ -378,8 +396,6 @@ if run_clicked:
     st.subheader("回撤比較")
     fig_dd = go.Figure()
     for sym in sorted_result_syms:
-        if sym not in results:
-            continue
         curve = results[sym].equity_curve
         rolling_max = curve["PortfolioValue"].cummax()
         drawdown = (curve["PortfolioValue"] / rolling_max - 1) * 100
@@ -397,14 +413,15 @@ if run_clicked:
     )
     st.plotly_chart(fig_dd, use_container_width=True)
 
-    # ── 明細資料 ──────────────────────────────────────────
+    # ── 明細資料：固定 4 tabs，避免 tab 數量變動引發 removeChild ─
     with st.expander("查看各 ETF 明細資料（最近 120 筆）"):
-        # 為避免 Streamlit 前端渲染錯誤 (removeChild)，分頁標籤維持固定順序
-        stable_syms = [s for s in ETF_DISPLAY_ORDER if s in results]
-        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in stable_syms])
-        for tab, sym in zip(tabs, stable_syms):
+        tabs = st.tabs([f"{s} {ETF_META[s]['name']}" for s in ETF_DISPLAY_ORDER])
+        for tab, sym in zip(tabs, ETF_DISPLAY_ORDER):
             with tab:
-                st.dataframe(results[sym].equity_curve.tail(120), use_container_width=True)
+                if sym in results:
+                    st.dataframe(results[sym].equity_curve.tail(120), use_container_width=True)
+                else:
+                    st.info("此 ETF 未在本次試算中。")
 
 else:
     st.info("請選擇 ETF、設定月份與每月投入金額後，按「▶ 開始試算」。")
