@@ -51,8 +51,9 @@ def load_local_data(symbol: str) -> pd.DataFrame:
     if not csv_path.exists():
         raise FileNotFoundError(f"找不到本地資料檔: {csv_path}")
 
-    df = pd.read_csv(csv_path, parse_dates=["Date"])
-    df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], format="%Y-%m-%d")
+    df = pd.read_csv(csv_path)
+    df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], errors="coerce")
+    df = df.dropna(subset=["Date"])
     df = df.sort_values("Date").drop_duplicates(subset=["Date"])
     df = df.set_index("Date")
     return df
@@ -86,7 +87,8 @@ def _download_history(yf_symbol: str) -> pd.DataFrame:
     df = df.reset_index()
     df.rename(columns={df.columns[0]: "Date"}, inplace=True)
     # Normalize to naive date-only (no time, no tz) with consistent ns resolution
-    df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], format="%Y-%m-%d")
+    df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], errors="coerce")
+    df = df.dropna(subset=["Date"])
     return df
 
 
@@ -171,8 +173,9 @@ def load_splits(symbol: str) -> pd.DataFrame:
     if not splits_path.exists():
         return pd.DataFrame(columns=["Date", "SplitRatio"])
     try:
-        df = pd.read_csv(splits_path, parse_dates=["Date"])
-        df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], format="%Y-%m-%d")
+        df = pd.read_csv(splits_path)
+        df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], errors="coerce")
+        df = df.dropna(subset=["Date"])
         return df
     except Exception:  # noqa: BLE001
         return pd.DataFrame(columns=["Date", "SplitRatio"])
@@ -192,7 +195,8 @@ def update_symbol_data(symbol: str) -> UpdateResult:
     if csv_path.exists():
         df_old = pd.read_csv(csv_path)
         # Normalize Date dtype to match df_new before merging (pandas 3 dtype issue)
-        df_old["Date"] = pd.to_datetime(df_old["Date"].astype(str).str[:10], format="%Y-%m-%d")
+        df_old["Date"] = pd.to_datetime(df_old["Date"].astype(str).str[:10], errors="coerce")
+        df_old = df_old.dropna(subset=["Date"])
         # df_new is authoritative; keep old rows only for dates NOT covered by new download
         new_dates = set(df_new["Date"])
         df_old_extra = df_old[~df_old["Date"].isin(new_dates)]
