@@ -9,20 +9,24 @@ import streamlit as st
 from backtest import run_dca_backtest
 from etf_data import SUPPORTED_SYMBOLS, load_local_data, load_splits, update_all_if_needed
 
-ETF_DISPLAY_ORDER = ["0050", "00631L", "QQQ", "QQQM"]
+ETF_DISPLAY_ORDER = ["0050", "006208", "00631L", "00675L", "QQQ", "QQQM"]
 
 ETF_META = {
-    "0050":   {"name": "元大台灣50",    "label": "0050"},
-    "00631L": {"name": "元大台灣50正2", "label": "00631L"},
-    "QQQ":    {"name": "Invesco QQQ",  "label": "QQQ"},
-    "QQQM":   {"name": "QQQM",         "label": "QQQM"},
+    "0050":   {"name": "元大台灣50",        "label": "0050"},
+    "006208": {"name": "富邦台50",          "label": "006208"},
+    "00631L": {"name": "元大台灣50正2",     "label": "00631L"},
+    "00675L": {"name": "富邦台灣加權正2",   "label": "00675L"},
+    "QQQ":    {"name": "Invesco QQQ",      "label": "QQQ"},
+    "QQQM":   {"name": "QQQM",             "label": "QQQM"},
 }
 
 COLORS = {
     "QQQ":    "#4C9BE8",
     "QQQM":   "#A78BFA",
     "0050":   "#F59E0B",
+    "006208": "#FB923C",
     "00631L": "#34D399",
+    "00675L": "#2DD4BF",
 }
 
 PRESETS = [("3千", 3000), ("5千", 5000), ("1萬", 10000), ("2萬", 20000), ("3萬", 30000)]
@@ -61,15 +65,19 @@ div[data-testid="stHorizontalBlock"] button[kind="secondary"] {
     padding: 2px 10px; font-size: 0.8rem;
 }
 
-/* ETF 按鈕配色：精確鎖定只含 4 欄的橫列（ETF 選擇區），不影響其他按鈕 */
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(1) button { border-color: #F59E0B; color: #F59E0B; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(1) [data-testid="stBaseButton-primary"] { background-color: #F59E0B; border-color: #F59E0B; color: #000; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(2) button { border-color: #34D399; color: #34D399; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(2) [data-testid="stBaseButton-primary"] { background-color: #34D399; border-color: #34D399; color: #000; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(3) button { border-color: #4C9BE8; color: #4C9BE8; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(3) [data-testid="stBaseButton-primary"] { background-color: #4C9BE8; border-color: #4C9BE8; color: #fff; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(4) button { border-color: #A78BFA; color: #A78BFA; }
-div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(4)):not(:has(> div[data-testid="stColumn"]:nth-child(5))) > div[data-testid="stColumn"]:nth-child(4) [data-testid="stBaseButton-primary"] { background-color: #A78BFA; border-color: #A78BFA; color: #fff; }
+/* ETF 按鈕配色：精確鎖定只含 6 欄的橫列（ETF 選擇區），不影響其他按鈕 */
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(1) button { border-color: #F59E0B; color: #F59E0B; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(1) [data-testid="stBaseButton-primary"] { background-color: #F59E0B; border-color: #F59E0B; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(2) button { border-color: #FB923C; color: #FB923C; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(2) [data-testid="stBaseButton-primary"] { background-color: #FB923C; border-color: #FB923C; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(3) button { border-color: #34D399; color: #34D399; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(3) [data-testid="stBaseButton-primary"] { background-color: #34D399; border-color: #34D399; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(4) button { border-color: #2DD4BF; color: #2DD4BF; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(4) [data-testid="stBaseButton-primary"] { background-color: #2DD4BF; border-color: #2DD4BF; color: #000; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(5) button { border-color: #4C9BE8; color: #4C9BE8; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(5) [data-testid="stBaseButton-primary"] { background-color: #4C9BE8; border-color: #4C9BE8; color: #fff; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(6) button { border-color: #A78BFA; color: #A78BFA; }
+div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"]:nth-child(6)):not(:has(> div[data-testid="stColumn"]:nth-child(7))) > div[data-testid="stColumn"]:nth-child(6) [data-testid="stBaseButton-primary"] { background-color: #A78BFA; border-color: #A78BFA; color: #fff; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -324,8 +332,8 @@ if "backtest" in st.session_state:
         })
     st.dataframe(pd.DataFrame(rows).set_index("ETF"), use_container_width=True)
 
-    # ── Metric cards：固定 4 欄，避免欄數變動引發 removeChild ─
-    metric_cols = st.columns(4)
+    # ── Metric cards：固定 6 欄，避免欄數變動引發 removeChild ─
+    metric_cols = st.columns(6)
     for i, sym in enumerate(ETF_DISPLAY_ORDER):
         if sym not in results:
             continue

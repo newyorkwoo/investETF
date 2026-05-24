@@ -16,7 +16,9 @@ SUPPORTED_SYMBOLS = {
     "QQQ": "QQQ",
     "QQQM": "QQQM",
     "0050": "0050.TW",
+    "006208": "006208.TW",
     "00631L": "00631L.TW",
+    "00675L": "00675L.TW",
 }
 
 
@@ -61,6 +63,7 @@ def load_local_data(symbol: str) -> pd.DataFrame:
 
 def _download_history(yf_symbol: str) -> pd.DataFrame:
     # auto_adjust=False to preserve Adj Close for total-return style calculation.
+    # Some TW tickers (e.g. 006208.TW) only work with auto_adjust=True — fall back if empty.
     raw = yf.download(
         yf_symbol,
         period="max",
@@ -68,6 +71,15 @@ def _download_history(yf_symbol: str) -> pd.DataFrame:
         auto_adjust=False,
         progress=False,
     )
+
+    if raw.empty:
+        raw = yf.download(
+            yf_symbol,
+            period="max",
+            interval="1d",
+            auto_adjust=True,
+            progress=False,
+        )
 
     if raw.empty:
         raise ValueError(f"無法下載 {yf_symbol} 的歷史資料")
