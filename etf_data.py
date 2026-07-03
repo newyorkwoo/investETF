@@ -56,6 +56,7 @@ def load_local_data(symbol: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], errors="coerce")
     df = df.dropna(subset=["Date"])
+    df = df.dropna(subset=["Adj Close"])  # keep in sync with backtest's own dropna, so min/max bounds match
     df = df.sort_values("Date").drop_duplicates(subset=["Date"])
     df = df.set_index("Date")
     return df

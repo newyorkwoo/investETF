@@ -159,7 +159,7 @@ st.divider()
 
 # ── 月份清單（取所有已選ETF各自的最晚「起始」月份到最新）────────────
 overall_min_date = max(df.index.min() for df in selected_data.values())
-overall_max_date = max(df.index.max() for df in selected_data.values())
+overall_max_date = min(df.index.max() for df in selected_data.values())
 
 def _month_range(start: pd.Timestamp, end: pd.Timestamp) -> list[str]:
     periods = pd.period_range(start=start.to_period("M"), end=end.to_period("M"), freq="M")
