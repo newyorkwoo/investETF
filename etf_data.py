@@ -101,6 +101,7 @@ def _download_history(yf_symbol: str) -> pd.DataFrame:
     # Normalize to naive date-only (no time, no tz) with consistent ns resolution
     df["Date"] = pd.to_datetime(df["Date"].astype(str).str[:10], errors="coerce")
     df = df.dropna(subset=["Date"])
+    df = df.dropna(subset=["Adj Close"])  # yfinance may include weekend/holiday rows with no price data
     return df
 
 
